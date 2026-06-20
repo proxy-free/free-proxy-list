@@ -1,0 +1,32 @@
+name: Update Proxy List
+
+on:
+  schedule:
+    - cron: "*/30 * * * *"   # every 30 minutes
+  workflow_dispatch:          # allow manual runs
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch latest proxies
+        run: |
+          curl -sf https://proxy-free.com/export/all.txt      -o all.txt
+          curl -sf https://proxy-free.com/export/http.txt     -o http.txt
+          curl -sf https://proxy-free.com/export/https.txt    -o https.txt
+          curl -sf https://proxy-free.com/export/socks4.txt   -o socks4.txt
+          curl -sf https://proxy-free.com/export/socks5.txt   -o socks5.txt
+          curl -sf https://proxy-free.com/export/proxies.json -o proxies.json
+
+      - name: Commit & push if changed
+        run: |
+          git config user.name  "proxy-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A
+          git commit -m "Update proxy list ($(date -u '+%Y-%m-%d %H:%M UTC'))" || exit 0
+          git push
