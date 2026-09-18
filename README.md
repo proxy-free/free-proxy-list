@@ -9,7 +9,8 @@ Free, regularly tested **HTTP, SOCKS4 and SOCKS5** proxies. Every proxy here was
 connected to and checked for speed, uptime and anonymity before it was committed,
 and the whole list is refreshed every 30 minutes by a scheduled GitHub Action.
 
-No signup, no key, no rate limit on the raw files.
+No signup, no key, no rate limit. The files in this repository are served by
+GitHub, so pull them as often as you like.
 
 👉 Searchable version with country, protocol, anonymity and speed filters:
 **https://proxy-free.com/proxy-list/**
@@ -113,13 +114,19 @@ The rest are at https://proxy-free.com/proxy-list/
 
 ## Free API
 
-If you would rather call an endpoint than parse a file, there is a free JSON and
-plain text API with per country and per protocol filters, no key required:
-**https://proxy-free.com/free-proxy-api/**
+If you would rather call an endpoint than parse a file, there is a free API that
+needs no key. It returns 50 proxies per call and takes one parameter, `format`,
+which is either `json` or `txt`:
 
 ```bash
-curl "https://proxy-free.com/free-api/proxies/?format=json&limit=10"
+curl "https://proxy-free.com/free-api/proxies/?format=json"
+curl "https://proxy-free.com/free-api/proxies/?format=txt"
 ```
+
+It allows 10 requests per day per address. For anything heavier, or for
+filtering by country and protocol, use the files in this repository instead:
+they are the same data, updated just as often, with no limit. Details at
+**https://proxy-free.com/free-proxy-api/**
 
 ## Check your own proxies
 
